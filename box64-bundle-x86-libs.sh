@@ -44,7 +44,7 @@ do
         then echo "Failed to download ${pkg_url}"
         exit 1
     fi
-    pkg_checksum_actual="$(sha256sum ${pkg_name} | awk '{print $1}')"
+    pkg_checksum_actual="$(sha256sum "${pkg_name}" | awk '{print $1}')"
     if [ "${pkg_checksum_expected}" -ne "${pkg_checksum_actual}" ];
         then echo "Invalid checksum for ${pkg_name}"
         echo "Expected: ${pkg_checksum_expected}"
