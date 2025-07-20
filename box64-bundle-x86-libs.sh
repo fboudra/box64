@@ -32,8 +32,8 @@ extract_pkg_auto() {
 }
 
 box64_dir=$(pwd)
-dir_tmp_local="$(mktemp --directory)"
-cd "${dir_tmp_local}"
+dir_tmp_local="$(mktemp --directory /tmp/box64-bundle.XXXXXX)"
+cd "${dir_tmp_local}" || exit 1
 
 for line in $(cat "${box64_dir}/box64-bundle-x86-libs.csv");
     do pkg_url="$(echo "${line}" | cut -d, -f1)"
@@ -102,10 +102,10 @@ for lib in libc.so libpthread.so librt.so libGL.so libGL.so libX11.so \
 done
 
 if find "${dir_tmp_local}"/bundle-libs/ -type l ! -exec test -e {} \; -print | grep bundle-libs
-    then echo "Broken symlinks found."
-    cd -
-    echo rm -r -f "${dir_tmp_local}"
-    exit 1
+    then
+        echo "Broken symlinks found."
+        echo rm -rf "${dir_tmp_local}"
+        exit 1
 fi
 
 mv "${dir_tmp_local}"/*.deb "${dir_tmp_local}/bundle-pkgs/"
@@ -117,5 +117,4 @@ tar --directory "${dir_tmp_local}/bundle-libs" --create --file "${box64_dir}/box
 tar --directory "${dir_tmp_local}/bundle-pkgs" --create --file "${box64_dir}/box64-bundle-x86-pkgs.tar.gz" .
 
 # Clean up.
-cd -
-rm -r -f "${dir_tmp_local}"
+rm -rf "${dir_tmp_local}"
