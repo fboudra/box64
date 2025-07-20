@@ -35,8 +35,9 @@ box64_dir=$(pwd)
 dir_tmp_local="$(mktemp --directory /tmp/box64-bundle.XXXXXX)"
 cd "${dir_tmp_local}" || exit 1
 
-for line in $(cat "${box64_dir}/box64-bundle-x86-libs.csv");
-    do pkg_url="$(echo "${line}" | cut -d, -f1)"
+while IFS= read -r line
+do
+    pkg_url="$(echo "${line}" | cut -d, -f1)"
     pkg_checksum_expected="$(echo "${line}" | cut -d, -f2)"
     pkg_name="$(basename "${pkg_url}")"
     if ! curl --silent --fail --location --remote-name "${pkg_url}"
@@ -51,7 +52,7 @@ for line in $(cat "${box64_dir}/box64-bundle-x86-libs.csv");
         exit 1
     fi
     extract_pkg_auto "${pkg_name}"
-done
+done < "${box64_dir}"/box64-bundle-x86-libs.csv
 
 # Start preperation of bundles.
 mkdir -p \
