@@ -73,14 +73,13 @@ cp --archive "${dir_tmp_local}"/lib64/*.so* "${dir_tmp_local}/bundle-libs/usr/li
 cp --archive "${dir_tmp_local}"/usr/lib32/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-i386-linux-gnu"
 
 # Create "<LIBRARY_FILE>.so" symlinks.
-for dir_lib in \
-  "${dir_tmp_local}/bundle-libs/usr/lib/box64-i386-linux-gnu" \
-  "${dir_tmp_local}/bundle-libs/usr/lib/box64-x86_64-linux-gnu"
-    # If two or more libraries of the same name exist, this will symlink the oldest version.
-    # Pipe this into a reverse sort `| sort -r` to symlink the newest version.
-    do for lib in $(ls -1 "${dir_lib}")
-        # Example output: libbluetooth.so
-        do lib_base="$(echo "${lib}" | cut -d. -f1,2)"
+for dir_lib in "${dir_tmp_local}"/bundle-libs/usr/lib/box64-*-linux-gnu
+# If two or more libraries of the same name exist, this will symlink the oldest version.
+# Pipe this into a reverse sort `| sort -r` to symlink the newest version.
+do
+    for lib in $(ls -1 "${dir_lib}")
+    # Example output: libbluetooth.so
+    do lib_base="$(echo "${lib}" | cut -d. -f1,2)"
         if ! ls "${dir_lib}/${lib_base}" 2> /dev/null
             then ln -s "${lib}" "${dir_lib}/${lib_base}"
         fi
