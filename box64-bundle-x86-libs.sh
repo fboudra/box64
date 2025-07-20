@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -x
 
@@ -44,7 +44,7 @@ for line in $(cat "${box64_dir}/box64-bundle-x86-libs.csv");
         exit 1
     fi
     pkg_checksum_actual="$(sha256sum ${pkg_name} | awk '{print $1}')"
-    if [[ "${pkg_checksum_expected}" -ne "${pkg_checksum_actual}" ]];
+    if [ "${pkg_checksum_expected}" -ne "${pkg_checksum_actual}" ];
         then echo "Invalid checksum for ${pkg_name}"
         echo "Expected: ${pkg_checksum_expected}"
         echo "Actual: ${pkg_checksum_actual}"
