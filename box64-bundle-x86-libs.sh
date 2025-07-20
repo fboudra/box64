@@ -108,10 +108,9 @@ if find "${dir_tmp_local}"/bundle-libs/ -type l ! -exec test -e {} \; -print | g
         exit 1
 fi
 
-mv "${dir_tmp_local}"/*.deb "${dir_tmp_local}/bundle-pkgs/"
-mv "${dir_tmp_local}"/*.eopkg "${dir_tmp_local}/bundle-pkgs/"
-mv "${dir_tmp_local}"/*.rpm "${dir_tmp_local}/bundle-pkgs/"
-mv "${dir_tmp_local}"/*.xbps "${dir_tmp_local}/bundle-pkgs/"
+mv "${dir_tmp_local}"/*.deb "${dir_tmp_local}"/*.eopkg \
+   "${dir_tmp_local}"/*.rpm "${dir_tmp_local}"/*.xbps \
+   "${dir_tmp_local}"/bundle-pkgs
 
 tar --directory "${dir_tmp_local}/bundle-libs" --create --file "${box64_dir}/box64-bundle-x86-libs.tar.gz" .
 tar --directory "${dir_tmp_local}/bundle-pkgs" --create --file "${box64_dir}/box64-bundle-x86-pkgs.tar.gz" .
