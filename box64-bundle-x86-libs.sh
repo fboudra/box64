@@ -88,17 +88,16 @@ done
 
 # Remove libraries that cannot be emulated.
 # https://github.com/ptitSeb/box64/blob/v0.3.6/src/librarian/library.c#L433
-for lib in libc.so libpthread.so librt.so libGL.so libGL.so libX11.so \
-  libasound.so libdl.so libm.so libbsd.so libutil.so libresolv.so \
-  libXxf86vm.so libXinerama.so libXrandr.so libXext.so libXfixes.so libXcursor.so \
-  libXrender.so  libXft.so libXi.so libXss.so libXpm.so libXau.so libXdmcp.so \
-  libX11-xcb.so libxcb.so libxcb-xfixes.so libxcb-shape.so libxcb-shm.so libxcb-randr.so \
-  libxcb-image.so libxcb-keysyms.so libxcb-xtest.so libxcb-glx.so libxcb-dri2.so libxcb-dri3.so \
-  libXtst.so libXt.so libXcomposite.so libXdamage.so libXmu.so libxkbcommon.so \
-  libxkbcommon-x11.so libpulse-simple.so libpulse.so libvulkan.so libvulkan.so \
-  ld-linux-x86-64.so crashhandler.so libtcmalloc_minimal.so libtcmalloc_minimal.so libanl.so \
-  ld-linux.so ld-linux.so libthread_db.so
-    do find "${dir_tmp_local}" -name "${lib}"* -delete
+set -- libc libpthread librt libGL libX11 libasound libdl libm libbsd libutil \
+  libresolv libXxf86vm libXinerama libXrandr libXext libXfixes libXcursor \
+  libXrender libXft libXi libXss libXpm libXau libXdmcp libX11-xcb libxcb \
+  libxcb-xfixes libxcb-shape libxcb-shm libxcb-randr libxcb-image \
+  libxcb-keysyms libxcb-xtest libxcb-glx libxcb-dri2 libxcb-dri3 libXtst libXt \
+  libXcomposite libXdamage libXmu libxkbcommon libxkbcommon-x11 \
+  libpulse-simple libpulse libvulkan ld-linux-x86-64 crashhandler \
+  libtcmalloc_minimal libanl ld-linux libthread_db
+for file in "$@"; do
+    rm -f "${dir_tmp_local}"/bundle-libs/usr/lib/box64-*-linux-gnu/"${file}".so*
 done
 
 if find "${dir_tmp_local}"/bundle-libs/ -type l ! -exec test -e {} \; -print | grep bundle-libs
