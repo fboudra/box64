@@ -80,7 +80,7 @@ for dir_lib in "${dir_tmp_local}"/bundle-libs/usr/lib/box64-*-linux-gnu; do
     for lib in lib*.so*; do
         lib_base="$(echo "${lib}" | cut -d. -f1,2)"
         if ! ls "${dir_lib}/${lib_base}" 2> /dev/null; then
-            ln -s "${lib}" "${lib_base}"
+            ln -sf "${lib}" "${lib_base}"
         fi
     done
 done
@@ -106,7 +106,9 @@ if find "${dir_tmp_local}"/bundle-libs/ -type l ! -exec test -e {} \; -print | g
         exit 1
 fi
 
+set +e # avoid missing xbps error
 (cd "${dir_tmp_local}" && mv *.deb *.eopkg *.rpm *.xbps bundle-pkgs)
+set -e
 
 tar --directory "${dir_tmp_local}"/bundle-libs --create --file "${box64_dir}"/box64-bundle-x86-libs.tar.gz .
 tar --directory "${dir_tmp_local}"/bundle-pkgs --create --file "${box64_dir}"/box64-bundle-x86-pkgs.tar.gz .
