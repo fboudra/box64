@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -x
+set -ex
 
 extract_pkg_auto() {
     # Example x86_64 package name: libcurl3-gnutls_7.74.0-1.3+deb11u7~bpo11+1_amd64.deb
@@ -33,7 +33,7 @@ extract_pkg_auto() {
 
 box64_dir=$(pwd)
 dir_tmp_local="$(mktemp --directory /tmp/box64-bundle.XXXXXX)"
-cd "${dir_tmp_local}" || exit 1
+cd "${dir_tmp_local}"
 
 while IFS= read -r line
 do
