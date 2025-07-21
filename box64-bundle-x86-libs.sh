@@ -56,21 +56,21 @@ done < "${box64_dir}"/box64-bundle-x86-libs.csv
 
 # Start preperation of bundles.
 mkdir -p \
-  "${dir_tmp_local}/bundle-libs/usr/lib/box64-i386-linux-gnu" \
-  "${dir_tmp_local}/bundle-libs/usr/lib/box64-x86_64-linux-gnu" \
-  "${dir_tmp_local}/bundle-pkgs" \
+  "${dir_tmp_local}"/bundle-libs/usr/lib/box64-i386-linux-gnu \
+  "${dir_tmp_local}"/bundle-libs/usr/lib/box64-x86_64-linux-gnu \
+  "${dir_tmp_local}"/bundle-pkgs \
 
 # Copy Debian family libraries.
-cp --archive "${dir_tmp_local}"/usr/lib/i386-linux-gnu/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-i386-linux-gnu"
-cp --archive "${dir_tmp_local}"/usr/lib/x86_64-linux-gnu/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-x86_64-linux-gnu"
+cp --archive "${dir_tmp_local}"/usr/lib/i386-linux-gnu/*.so* "${dir_tmp_local}"/bundle-libs/usr/lib/box64-i386-linux-gnu
+cp --archive "${dir_tmp_local}"/usr/lib/x86_64-linux-gnu/*.so* "${dir_tmp_local}"/bundle-libs/usr/lib/box64-x86_64-linux-gnu
 # Copy Fedora family libraries.
-cp --archive "${dir_tmp_local}"/usr/lib/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-i386-linux-gnu"
-cp --archive "${dir_tmp_local}"/usr/lib64/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-x86_64-linux-gnu"
+cp --archive "${dir_tmp_local}"/usr/lib/*.so* "${dir_tmp_local}"/bundle-libs/usr/lib/box64-i386-linux-gnu
+cp --archive "${dir_tmp_local}"/usr/lib64/*.so* "${dir_tmp_local}"/bundle-libs/usr/lib/box64-x86_64-linux-gnu
 ## This location is used by a few special packages such as "glibc".
-cp --archive "${dir_tmp_local}"/lib/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-i386-linux-gnu"
-cp --archive "${dir_tmp_local}"/lib64/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-x86_64-linux-gnu"
+cp --archive "${dir_tmp_local}"/lib/*.so* "${dir_tmp_local}"/bundle-libs/usr/lib/box64-i386-linux-gnu
+cp --archive "${dir_tmp_local}"/lib64/*.so* "${dir_tmp_local}"/bundle-libs/usr/lib/box64-x86_64-linux-gnu
 # Copy Solus and Void Linux family libraries.
-cp --archive "${dir_tmp_local}"/usr/lib32/*.so* "${dir_tmp_local}/bundle-libs/usr/lib/box64-i386-linux-gnu"
+cp --archive "${dir_tmp_local}"/usr/lib32/*.so* "${dir_tmp_local}"/bundle-libs/usr/lib/box64-i386-linux-gnu
 
 # Create "<LIBRARY_FILE>.so" symlinks.
 # If two or more libraries of the same name exist, this will symlink the oldest version.
@@ -110,8 +110,8 @@ mv "${dir_tmp_local}"/*.deb "${dir_tmp_local}"/*.eopkg \
    "${dir_tmp_local}"/*.rpm "${dir_tmp_local}"/*.xbps \
    "${dir_tmp_local}"/bundle-pkgs
 
-tar --directory "${dir_tmp_local}/bundle-libs" --create --file "${box64_dir}/box64-bundle-x86-libs.tar.gz" .
-tar --directory "${dir_tmp_local}/bundle-pkgs" --create --file "${box64_dir}/box64-bundle-x86-pkgs.tar.gz" .
+tar --directory "${dir_tmp_local}"/bundle-libs --create --file "${box64_dir}"/box64-bundle-x86-libs.tar.gz .
+tar --directory "${dir_tmp_local}"/bundle-pkgs --create --file "${box64_dir}"/box64-bundle-x86-pkgs.tar.gz .
 
 # Clean up.
 rm -rf "${dir_tmp_local}"
